@@ -8,5 +8,5 @@ public class WordmatchApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(WordmatchApplication.class, args);
-	}
+    }
 }

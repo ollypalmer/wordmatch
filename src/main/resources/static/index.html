@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html ng-app="wordmatch">
+<head>
+    <meta charset="UTF-8">
+    <title>German Tester</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css"/>-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script type="text/javascript" src="js/angular.min.js"></script>
+    <script type="text/javascript" src="js/app.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div id="Body" class="container-fluid">
+    <div class="jumbotron text-center">
+        <h1>German Word Matcher</h1>
+        <h2>
+            <small><i>for Zoe</i></small>
+        </h2>
+    </div>
+
+    <div class="row">
+
+        <div class="col-sm-6 col-sm-offset-3">
+        <div id="section">
+            <section ng-controller="PanelController as panel">
+                    <ul class="nav nav-pills nav-justified">
+                        <li ng-class="{ active: panel.isSelected(1) }">
+                            <a href ng-click="panel.selectTab(1)">Match words</a>
+                        </li>
+                        <li ng-class="{ active: panel.isSelected(2) }">
+                            <a href ng-click="panel.selectTab(2)">Add Words</a>
+                        </li>
+                        <li ng-class="{ active: panel.isSelected(3) }">
+                            <a href ng-click="panel.selectTab(3)">Options</a>
+                        </li>
+                    </ul>
+
+
+                <div class="panel container-fluid" ng-show="panel.isSelected(1)" ng-controller="WordmatchController as wordmatch">
+                    <div class="row align-items-end">
+                        <div class="col-sm-4">
+                            <h2>Match Words</h2>
+                        </div>
+                        <div class="col-sm-3 col-sm-offset-5 dropdown" style="padding-top: 20px">
+                            <button class="btn btn-default dropdown-toggle pull-right" type="button" data-toggle="dropdown">
+                                <span class="glyphicon glyphicon-cog"></span>
+                            <span class="caret"></span></button>
+                            <ul class="dropdown-menu no-close">
+                                <li><h6 class="dropdown-header">Number of Words</h6></li>
+                                <li class="dropdown-item"><a href="">Show me
+                                    <select class="form-control" id="selectVar" ng-model="wordmatch.resultLimit">
+                                        <option value=5>5</option>
+                                        <option value=10>10</option>
+                                        <option value=15>15</option>
+                                        <option value=20>20</option>
+                                        <option value=25>25</option>
+                                        <option value=30>30</option>
+                                    </select>
+                                    words</a></li>
+                                <li><h6 class="dropdown-header">Testing Language</h6></li>
+                                <div class="radio form-inline" style="padding-left: 20px">
+                                    <li class="dropdown-item"><label><input type="radio" ng-model="wordmatch.language" value="english">English</label></li>
+                                    <li class="dropdown-item"><label><input type="radio" ng-model="wordmatch.language" value="german">German</label></li>
+                                </div>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="row" ng-repeat="word in wordmatch.words">
+                        <form name="myForm">
+                            <label class="col-sm-2 col-sm-offset-2 col-form-label">{{wordmatch.getWord(word)}}</label>
+                            <div class="form-group col-sm-6" ng-class="{ 'has-success' :  wordmatch.getValid(word) && wordmatch.checkClick, 'has-error' : !wordmatch.getValid(word) && wordmatch.checkClick } ">
+                                <input type="text" name="input" class="form-control form-control-success" ng-model="word.answer">
+                                <span class="glyphicon glyphicon-ok form-control-feedback" ng-show="wordmatch.getValid(word) && wordmatch.checkClick === true"></span>
+                                <span class="glyphicon glyphicon-remove form-control-feedback" ng-show="!wordmatch.getValid(word) && wordmatch.checkClick === true"></span>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="row">
+                        <input type="button" class="btn btn-primary col-sm-2" value="Get Words" ng-click="wordmatch.getWords()"><input type="button" class="btn btn-primary col-sm-2 col-sm-offset-8" value="Check" ng-click="wordmatch.check()" ng-disabled="wordmatch.checkClick === true"></p>
+                    </div>
+                </div>
+
+                <div class="panel container-fluid" ng-show="panel.isSelected(2)">
+                    <h2>Add Words</h2>
+                    <div class="text-center">
+                    <form name="addWord" ng-controller="WordAddController as wordAddCtrl"
+                          ng-submit="addWord.$valid && wordAddCtrl.addWord()" novaildate>
+                        <p>German: <input ng-model="wordAddCtrl.word.german" class="form-control" type="text" name="german" required>
+                        <p>English: <input ng-model="wordAddCtrl.word.english" class="form-control" type="text" name="english" required>
+                        <p><input type="submit" class="btn btn-default">
+                    </form>
+                    </div>
+                </div>
+
+                <div class="panel" ng-show="panel.isSelected(3)" ng-controller="WordmatchController as wordmatch">
+                    <h2>Options</h2>
+                    <div ng-repeat="word in wordmatch.words" class="text-center">
+                        <p>{{word.german}} / {{word.english}} - correct: {{word.correct}} - incorrect:
+                            {{word.incorrect}}</p>
+                    </div>
+                </div>
+
+            </section>
+        </div>
+        </div>
+
+    </div>
+</div>
+</body>
+</html>

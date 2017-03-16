@@ -4,6 +4,8 @@ import com.zolly.wordmatch.model.Word;
 import com.zolly.wordmatch.rest.service.RestService;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 /**
  * Created by oliver on 31/01/17.
  */
@@ -26,14 +28,24 @@ public class RestPath {
         return restService.get(id);
     }
 
+    @RequestMapping( value = "/getWords/{num}", method = RequestMethod.GET)
+    public List<Word> getWords(@PathVariable(value = "num") int num) {
+        return restService.getWords(num);
+    }
+
     @RequestMapping( value = "/addWord", method = RequestMethod.POST)
     public Word addWord(@RequestBody Word word) {
         return restService.add(word);
     }
 
-    @RequestMapping( value = "/update/{id}", method = RequestMethod.PUT)
-    public Word update(@PathVariable(value = "id") Long id, @RequestBody Word word) {
-        return restService.update(id, word);
+    @RequestMapping( value = "/updateCorrect/{id}", method = RequestMethod.PUT)
+    public Word updateCorrect(@PathVariable(value = "id") Long id) {
+        return restService.updateCorrect(id);
+    }
+
+    @RequestMapping( value = "/updateIncorrect/{id}", method = RequestMethod.PUT)
+    public Word updateIncorrect(@PathVariable(value = "id") Long id) {
+        return restService.updateIncorrect(id);
     }
 
     @RequestMapping( value = "/delete/{id}", method = RequestMethod.DELETE )

@@ -15,6 +15,8 @@ public interface RestService {
 
     List<Word> getWords(int num);
 
+    List<Word> getSortedWords(int num);
+
     Word add(Word word);
 
     Word updateCorrect(Long id);

@@ -33,17 +33,22 @@ public class RestPath {
         return restService.getWords(num);
     }
 
+    @RequestMapping( value = "/getIncorrectWords/{num}", method = RequestMethod.GET)
+    public List<Word> getSortedWords(@PathVariable(value = "num") int num) {
+        return restService.getSortedWords(num);
+    }
+
     @RequestMapping( value = "/addWord", method = RequestMethod.POST)
     public Word addWord(@RequestBody Word word) {
         return restService.add(word);
     }
 
-    @RequestMapping( value = "/updateCorrect/{id}", method = RequestMethod.PUT)
+    @RequestMapping( value = "/updateCorrect/{id}", method = RequestMethod.GET)
     public Word updateCorrect(@PathVariable(value = "id") Long id) {
         return restService.updateCorrect(id);
     }
 
-    @RequestMapping( value = "/updateIncorrect/{id}", method = RequestMethod.PUT)
+    @RequestMapping( value = "/updateIncorrect/{id}", method = RequestMethod.GET)
     public Word updateIncorrect(@PathVariable(value = "id") Long id) {
         return restService.updateIncorrect(id);
     }

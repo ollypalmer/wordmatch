@@ -33,12 +33,13 @@ public class RestServiceImpl implements RestService {
 
     public List<Word> getWords(int num) {
         List<Word> words = Lists.newArrayList(getAll());
-        int size = words.size();
-        if (num < words.size()) {
-            size = num;
-        }
         Collections.shuffle(words);
-        return words.subList(0, size);
+        return trimList(words, num);
+    }
+
+    public List<Word> getSortedWords(int num) {
+        List<Word> words = sortByIncorrect(Lists.newArrayList(getAll()));
+        return trimList(words, num);
     }
 
     public Word add(Word word) {
@@ -59,5 +60,18 @@ public class RestServiceImpl implements RestService {
 
     public void delete(Long id) {
         wordRepository.delete(id);
+    }
+
+    private List<Word> trimList(List<Word> list, int num) {
+        if (num > list.size()) {
+            return list;
+        } else {
+            return list.subList(0, num);
+        }
+    }
+
+    private List<Word> sortByIncorrect(List<Word> words) {
+        words.sort(Word.COMPARE_BY_INCORRECT);
+        return words;
     }
 }

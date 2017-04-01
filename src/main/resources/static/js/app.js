@@ -6,13 +6,31 @@
         wordmatch.checkClick = false;
         wordmatch.language = 'english';
         wordmatch.resultLimit = 10;
+        wordmatch.difficulty = 'getWords';
 
         wordmatch.words = [];
 
         this.check = function() {
             for (i = 0; i < wordmatch.words.length; i++) {
-                if (wordmatch.words[i].answer === wordmatch.words[i].german) {
-                    // word matches!
+                if ((wordmatch.words[i].answer === wordmatch.words[i].english && wordmatch.language === 'german') ||
+                    (wordmatch.words[i].answer === wordmatch.words[i].german && wordmatch.language === 'english')) {
+                    $http({
+                            method : "GET",
+                            url : "/updateCorrect/" + wordmatch.words[i].id
+                        }).then(function success(response) {
+                            //nothing here...
+                        }, function error(response) {
+
+                        });
+                } else {
+                    $http({
+                            method : "GET",
+                            url : "/updateIncorrect/" + wordmatch.words[i].id
+                        }).then(function success(response) {
+                            //nothing here..
+                        }, function error(response) {
+
+                        });
                 }
             }
             this.checkClick = true;
@@ -31,7 +49,11 @@
         };
 
         this.getValid = function(word) {
-            return word.answer === word.german;
+            if (wordmatch.language === 'german') {
+                return word.answer === word.english;
+            } else {
+                return word.answer === word.german
+            }
         };
 
         this.hasWords = function() {
@@ -41,11 +63,11 @@
         this.getWords = function() {
             $http({
                     method : "GET",
-                    url : "/getWords/" + wordmatch.resultLimit
+                    url : "/" + wordmatch.difficulty + "/" + wordmatch.resultLimit
                 }).then(function success(response) {
                     wordmatch.words = response.data;
                 }, function error(response) {
-                    alert("nope");
+
                 });
             this.checkClick = false;
         };
@@ -76,7 +98,6 @@
                 //headers: {'Content-Type': 'application/json'}
                 }).then(function success(response) {
                     //wordmatch.words = response.data;
-                    alert("success");
                 }, function error(response) {
                     alert("nope");
                 });
@@ -86,6 +107,37 @@
                 incorrect: 0,
                 };
         };
+    }]);
+
+    app.controller('OptionsController', ['$http', function($http) {
+        var options = this;
+        options.words = [];
+
+        this.getWords = function() {
+            $http({
+                method : "GET",
+                url : "/getAll"
+            }).then(function success(response) {
+                options.words = response.data;
+            }, function error(response) {
+                //error
+            });
+        };
+
+        this.removeWord = function(word) {
+            $http({
+               method : "DELETE",
+               url : "/delete/" + word.id
+            }).then(function success(response) {
+
+            }, function error(response) {
+               //error
+            });
+            options.getWords();
+        };
+
+
+        options.getWords();
     }]);
 
 

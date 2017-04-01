@@ -1,6 +1,7 @@
 package com.zolly.wordmatch.model;
 
 import javax.persistence.*;
+import java.util.Comparator;
 
 /**
  * Created by oliver on 31/01/17.
@@ -76,4 +77,22 @@ public class Word {
                 ", incorrect=" + incorrect +
                 '}';
     }
+
+    /**
+     * Sorts so the larger incorrect value is moved to the start of the list
+     */
+    public static Comparator<Word> COMPARE_BY_INCORRECT = new Comparator<Word>() {
+        @Override
+        public int compare(Word word, Word other) {
+            int returnVal = 0;
+            if (word.getIncorrect() < other.getIncorrect()) {
+                returnVal = 1;
+            } else if (word.getIncorrect() == other.getIncorrect()) {
+                returnVal = 0;
+            } else if (word.getIncorrect() > other.getIncorrect()) {
+                returnVal = -1;
+            }
+            return returnVal;
+        }
+    };
 }

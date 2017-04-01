@@ -64,6 +64,11 @@
                                     <li class="dropdown-item"><label><input type="radio" ng-model="wordmatch.language" value="english">English</label></li>
                                     <li class="dropdown-item"><label><input type="radio" ng-model="wordmatch.language" value="german">German</label></li>
                                 </div>
+                                <li><h6 class="dropdown-header">Difficulty</h6></li>
+                                <div class="radio form-inline" style="padding-left: 20px">
+                                    <li class="dropdown-item"><label><input type="radio" ng-model="wordmatch.difficulty" value="getWords">Normal</label></li>
+                                    <li class="dropdown-item"><label><input type="radio" ng-model="wordmatch.difficulty" value="getIncorrectWords">Hard Mode</label></li>
+                                </div>
                             </ul>
                         </div>
                     </div>
@@ -94,12 +99,28 @@
                     </div>
                 </div>
 
-                <div class="panel" ng-show="panel.isSelected(3)" ng-controller="WordmatchController as wordmatch">
+                <div class="panel" ng-show="panel.isSelected(3)" ng-controller="OptionsController as options">
                     <h2>Options</h2>
-                    <div ng-repeat="word in wordmatch.words" class="text-center">
-                        <p>{{word.german}} / {{word.english}} - correct: {{word.correct}} - incorrect:
-                            {{word.incorrect}}</p>
-                    </div>
+
+                        <table class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th>German</th>
+                                <th>English</th>
+                                <th>Correct</th>
+                                <th>Incorrect</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="word in options.words">
+                                    <td>{{word.german}}</td>
+                                    <td>{{word.english}}</td>
+                                    <td>{{word.correct}}</td>
+                                    <td>{{word.incorrect}}</td>
+                                    <td><span class="glyphicon glyphicon-trash" ng-click="options.removeWord(word)" role="button"></span></td>
+                                </tr>
+                            </tbody>
+                        </table>
                 </div>
 
             </section>

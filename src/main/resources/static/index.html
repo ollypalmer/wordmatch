@@ -50,14 +50,7 @@
                             <ul class="dropdown-menu no-close">
                                 <li><h6 class="dropdown-header">Number of Words</h6></li>
                                 <li class="dropdown-item"><a href="">Show me
-                                    <select class="form-control" id="selectVar" ng-model="wordmatch.resultLimit">
-                                        <option value=5>5</option>
-                                        <option value=10>10</option>
-                                        <option value=15>15</option>
-                                        <option value=20>20</option>
-                                        <option value=25>25</option>
-                                        <option value=30>30</option>
-                                    </select>
+                                    <input type="text" class="form-control" ng-model="wordmatch.resultLimit">
                                     words</a></li>
                                 <li><h6 class="dropdown-header">Testing Language</h6></li>
                                 <div class="radio form-inline" style="padding-left: 20px">
@@ -72,10 +65,10 @@
                             </ul>
                         </div>
                     </div>
-                    <div class="row" ng-repeat="word in wordmatch.words">
+                    <div class="row justify-content-center" ng-repeat="word in wordmatch.words">
                         <form name="myForm">
-                            <label class="col-sm-2 col-sm-offset-2 col-form-label">{{wordmatch.getWord(word)}}</label>
-                            <div class="form-group col-sm-6" ng-class="{ 'has-success' :  wordmatch.getValid(word) && wordmatch.checkClick, 'has-error' : !wordmatch.getValid(word) && wordmatch.checkClick } ">
+                            <label class="col-sm-6 col-form-label text-right">{{wordmatch.getWord(word)}}</label>
+                            <div class="form-group col-sm-5" ng-class="{ 'has-success' :  wordmatch.getValid(word) && wordmatch.checkClick, 'has-error' : !wordmatch.getValid(word) && wordmatch.checkClick } ">
                                 <input type="text" name="input" class="form-control form-control-success" ng-model="word.answer">
                                 <span class="glyphicon glyphicon-ok form-control-feedback" ng-show="wordmatch.getValid(word) && wordmatch.checkClick === true"></span>
                                 <span class="glyphicon glyphicon-remove form-control-feedback" ng-show="!wordmatch.getValid(word) && wordmatch.checkClick === true"></span>

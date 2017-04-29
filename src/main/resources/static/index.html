@@ -16,7 +16,7 @@
     <div class="jumbotron text-center">
         <h1>German Word Matcher</h1>
         <h2>
-            <small><i>for Zoe</i></small>
+            <small><i>for Zoë</i></small>
         </h2>
     </div>
 
@@ -65,8 +65,11 @@
                             </ul>
                         </div>
                     </div>
-                    <div class="row justify-content-center" ng-repeat="word in wordmatch.words">
-                        <form name="myForm">
+                    <div ng-repeat="word in wordmatch.words">
+                        <div class="row" ng-show="!wordmatch.getValid(word) && wordmatch.checkClick === true">
+                            <label class="col-sm-5 col-sm-offset-6 text-danger" style="line-height: 10%">{{wordmatch.getCorrectWord(word)}}</label>
+                        </div>
+                        <form name="myForm" class="row">
                             <label class="col-sm-6 col-form-label text-right">{{wordmatch.getWord(word)}}</label>
                             <div class="form-group col-sm-5" ng-class="{ 'has-success' :  wordmatch.getValid(word) && wordmatch.checkClick, 'has-error' : !wordmatch.getValid(word) && wordmatch.checkClick } ">
                                 <input type="text" name="input" class="form-control form-control-success" ng-model="word.answer">

@@ -48,6 +48,14 @@
             }
         };
 
+        this.getCorrectWord = function(word) {
+            if (wordmatch.language === 'german') {
+                return word.english;
+            } else {
+                return word.german;
+            }
+        };
+
         this.getValid = function(word) {
             if (wordmatch.language === 'german') {
                 return word.answer === word.english;
@@ -95,13 +103,12 @@
                 method : "POST",
                 url : "/addWord",
                 data : this.word
-                //headers: {'Content-Type': 'application/json'}
                 }).then(function success(response) {
-                    //wordmatch.words = response.data;
+
                 }, function error(response) {
-                    alert("nope");
+
                 });
-            //words.push(this.word);
+
             this.word = {
                 correct: 0,
                 incorrect: 0,
@@ -136,10 +143,7 @@
             options.getWords();
         };
 
-
         options.getWords();
     }]);
-
-
 
 })();
